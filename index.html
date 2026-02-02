@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For My Forever Love ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family:'Segoe UI',cursive;
+  background:linear-gradient(135deg,#ff758c,#ff99ac);
+  text-align:center;
+  overflow-x:hidden;
+  color:#fff;
+}
+
+h1,h2{margin:10px;}
+
+.card{
+  background:rgba(255,255,255,0.25);
+  margin:20px;
+  padding:25px;
+  border-radius:25px;
+  box-shadow:0 0 25px rgba(0,0,0,0.3);
+}
+
+input{
+  padding:12px;
+  border:none;
+  border-radius:15px;
+  width:80%;
+  margin:10px;
+}
+
+button{
+  padding:12px 30px;
+  border:none;
+  border-radius:25px;
+  background:#ff2f63;
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.msg{
+  display:none;
+  margin-top:15px;
+  font-size:18px;
+  white-space:pre-line;
+  text-align:left;
+}
+
+.correct{
+  color:#00ffcc;
+  font-weight:bold;
+  margin-bottom:10px;
+  font-size:20px;
+}
+
+.heart{
+  position:fixed;
+  color:red;
+  animation:float 6s linear infinite;
+  z-index:999;
+}
+
+@keyframes float{
+  0%{bottom:-10px;opacity:0;}
+  50%{opacity:1;}
+  100%{bottom:110%;opacity:0;}
+}
+
+.heartbeat{
+  animation:beat 1s infinite;
+}
+
+@keyframes beat{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.15);}
+  100%{transform:scale(1);}
+}
+</style>
+</head>
+
+<body>
+
+<h1>💖 Valentine Week – Just For My Love 💖</h1>
+<div id="days"></div>
+
+<audio id="music" loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9b9a6fdad8.mp3">
+</audio>
+
+<script>
+const today = new Date().getDate();
+const music = document.getElementById("music");
+
+const week = [
+{
+title:"🌹 Rose Day",
+day:7,
+password:"bbyy",
+hint:"The name that blooms in my heart 🌹😏",
+msg:`🌅 Good Morning my bbyy 🌹💖✨
+
+My dearest bbyy, puchkuu, sweetheart, hubbiee, daddyy, kuchupuchuu, bbuu — every morning I wake up thinking of you. 
+This rose I give you carries all my love, every kiss I've ever wanted to plant on your lips, every hug I've dreamed to wrap you in. 
+You make my life brighter than the sun, gentler than the morning breeze, and sweeter than any flower could ever be 🌸💞.
+
+I want to spend every day showing you my love, through little smiles, soft touches, and endless words that try to capture what my heart feels. 
+With every heartbeat, I feel closer to you. 
+You are my first thought when I wake, my last thought when I sleep, and everything in between 🌟💖💋.
+
+Happy Rose Day, my forever love. 
+May our love bloom forever, like this rose 🌹💞💫✨`
+},
+
+{
+title:"💌 Propose Day",
+day:8,
+password:"puchkuu",
+hint:"The name I whisper when I dream of forever 💌😘",
+msg:`🌅 Good Morning my puchkuu 💌💖✨
+
+My sweetest bbyy, my hubbiee, my sweetheart, my daddyy, my kuchupuchuu, my bbuu — today, I want to pour my heart out to you in words, in hugs, and in every heartbeat ❤️. 
+I propose to you not with rings, but with my soul — that every moment, every smile, every tear I share is for you and only you 💞💖.
+
+I choose you in laughter and in tears, in dreams and reality, in silence and in chaos. 
+You are my forever, my comfort, my warmth, and the love I can never stop thinking about 🌟💋💓.
+
+Happy Propose Day my love 💌💖✨🍀`
+},
+
+{
+title:"🍫 Chocolate Day",
+day:9,
+password:"bbuu",
+hint:"Sweet like chocolate, addictive like love 🍫😘",
+msg:`🌅 Good Morning my bbuu 🍫💖✨
+
+My bbyy, puchkuu, sweetheart, hubbiee, daddyy, kuchupuchuu — just like chocolate melts in your mouth, your love melts every worry in me 💞🍫. 
+Your smile is my sugar, your touch my warmth, and your presence my sweetest addiction 🌟💖.
+
+I dream of moments where we share chocolates, laugh endlessly, whisper secrets, and cuddle through every cloudy day. 
+Life tastes richer because of you, my sweetest bbuu 🍬💖💋.
+
+Happy Chocolate Day my love 🍫💞💓✨`
+},
+
+{
+title:"🧸 Teddy Day",
+day:10,
+password:"kuchupuchuu",
+hint:"Soft, cuddly, and only mine 🧸😉",
+msg:`🌅 Good Morning my kuchupuchuu 🧸💖✨
+
+My bbyy, bbuu, puchkuu, sweetheart, hubbiee, daddyy — this teddy is full of my hugs, my kisses 😘💞, and all the love I have for you. 
+Every time you hold it, imagine me holding you close, whispering that you are safe, loved, and cherished forever 🌟💓.
+
+I want to be your comfort, your calm, your safe place, and your joy. 
+Happy Teddy Day my love 🧸💖💋✨🌸`
+},
+
+{
+title:"💖 Promise Day",
+day:11,
+password:"sweetheart",
+hint:"The name my heart says naturally 💖😏",
+msg:`🌅 Good Morning my sweetheart 💖✨💞
+
+Bbyy, puchkuu, hubbiee, daddyy, kuchupuchuu, bbuu — today I promise to love you endlessly, to choose you every day, to support you, and to hold you close no matter what 🌟💖.
+
+You are my everything — my heartbeat, my smile, my calm in storms, my joy in happiness. 
+Every promise I make is to you alone, every word I speak carries my love for you ❤️💋.
+
+Happy Promise Day my love 💖💞🌸✨`
+},
+
+{
+title:"🤗 Hug Day",
+day:12,
+password:"daddyy",
+hint:"The name that feels safe & warm 😏🤗",
+msg:`🌅 Good Morning my daddyy 🤗💖✨
+
+Bbyy, puchkuu, bbuu, sweetheart, hubbiee, kuchupuchuu — every hug I give is filled with warmth, love, and promises 💞. 
+When you feel tired, sad, or lonely, imagine me wrapping you tightly, whispering that you are my everything 🌟💖💋.
+
+Happy Hug Day my love 🤗💖💓✨🌸`
+},
+
+{
+title:"😘 Kiss Day",
+day:13,
+password:"hubbiee",
+hint:"The name my lips love most 😘💋",
+msg:`🌅 Good Morning my hubbiee 😘💖✨
+
+My bbyy, puchkuu, bbuu, sweetheart, daddyy, kuchupuchuu — every kiss I give is full of love, trust, and heart 💞. 
+Every moment with you is magic, every smile you give makes me melt 💖💋. 
+I save all my kisses, all my hugs, all my heartbeats for you alone 💓🌸✨.
+
+Happy Kiss Day my love 💖💋🌟❤️`
+},
+
+{
+title:"❤️ Valentine Day",
+day:14,
+password:"kuchupuchuu",
+hint:"The name my soul lives in ❤️💖",
+msg:`🌅 Good Morning my forever love ❤️💖✨💞
+
+Bbyy, puchkuu, sweetheart, hubbiee, daddyy, bbuu, kuchupuchuu — you are my heartbeat 💓, my calm, my chaos, my home 🏡, my happiness 🌟💖💋. 
+Every nickname I call you is another way to say "I love you" 😘💞💖✨. 
+
+You make my life complete, my soul light, my heart joyful 🌸💖🌹. 
+I cannot imagine a day without you. Loving you is the most beautiful thing my heart has ever known 💖💋💞.
+
+Happy Valentine’s Day my forever, my always, my everything ❤️💖💋💞🌟✨`
+}
+];
+
+const container=document.getElementById("days");
+
+week.forEach((w,i)=>{
+container.innerHTML+=`
+<div class="card ${w.day===14?'heartbeat':''}">
+<h2>${w.title}</h2>
+${today>=w.day?`
+<p>💡 Hint: ${w.hint}</p>
+<input id="p${i}" placeholder="Type password my love 💕">
+<br>
+<button onclick="openMsg(${i})">🎁 Open Gift</button>
+<div class="msg" id="m${i}"></div>
+`:`<p>⏳ Unlocks on Feb ${w.day}</p>`}
+</div>`;
+});
+
+function typeWriter(el,text){
+el.innerHTML="";
+el.style.display="block";
+let i=0;
+(function typing(){
+if(i<text.length){
+el.innerHTML+=text.charAt(i);
+i++;
+setTimeout(typing,35);
+}
+})();
+}
+
+function openMsg(i){
+const val=document.getElementById("p"+i).value.trim();
+const box=document.getElementById("m"+i);
+if(val===week[i].password){
+music.play();
+box.innerHTML="<div class='correct'>Correct password, my love 💖</div>";
+typeWriter(box,week[i].msg);
+if(week[i].day===14){ hearts(); }
+}else{
+alert("Wrong password baby 😘 Try again 💕");
+}
+}
+
+function hearts(){
+setInterval(()=>{
+const h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"%";
+h.style.fontSize=(20+Math.random()*25)+"px";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),6000);
+},300);
+}
+</script>
+
+</body>
+</html>
